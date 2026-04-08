@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LentoTech | Integrated Solutions from Biosynthesis to Global Distribution</title>
+    <meta name="description" content="LentoTech is a premier supplier of high-purity APIs, Intermediates, and CDMO services across Human, Veterinary, Cosmetic, and Nutraceutical industries.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- PapaParse for CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#004A99', // Deep Navy
+                        surface: '#F8FAFC', // Soft Gray
+                        accent: '#0072CE', // Merck Blue
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; background-color: #FFFFFF; }
+        
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); }
+        
+        .hero-pattern {
+            background-color: #004A99;
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+
+        .card-minimal {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid #E2E8F0;
+        }
+        .card-minimal:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -12px rgba(0, 74, 153, 0.1);
+            border-color: #004A99;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .modal-overlay { background: rgba(0, 20, 40, 0.6); backdrop-filter: blur(4px); }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #004A99;
+        }
+
+        .app-card-active {
+            border-color: #004A99;
+            background-color: #F0F7FF;
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-4">
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold tracking-tighter text-brand leading-none">Lento<span class="text-accent">Tech</span></span>
+                        <span class="text-[9px] uppercase tracking-[0.3em] text-slate-400 font-bold mt-1">兰途科技</span>
+                    </div>
+                </div>
+                
+                <div class="hidden lg:flex items-center space-x-12">
+                    <a href="#applications" class="text-xs font-bold uppercase tracking-widest text-slate-600 hover:text-brand transition">Applications</a>
+                    <a href="#services" class="text-xs font-bold uppercase tracking-widest text-slate-600 hover:text-brand transition">Services</a>
+                    <a href="#products" class="text-xs font-bold uppercase tracking-widest text-slate-600 hover:text-brand transition">Products</a>
+                    <a href="#insights" class="text-xs font-bold uppercase tracking-widest text-slate-600 hover:text-brand transition">Insights</a>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <a href="mailto:info@risensunpharma.com" class="text-xs font-bold uppercase tracking-widest px-6 py-3 bg-brand text-white hover:bg-brand/90 transition">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-48 pb-32 hero-pattern text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl">
+                <div class="inline-block px-3 py-1 border border-white/20 bg-white/5 text-[10px] font-bold uppercase tracking-[0.2em] mb-8">
+                    Global Biotech Solutions
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-bold leading-[1.1] mb-8 tracking-tight">
+                    LentoTech: Integrated Solutions from <span class="text-blue-300">Biosynthesis</span> to Global Distribution.
+                </h1>
+                <p class="text-xl text-slate-300 mb-12 leading-relaxed font-light">
+                    Providing high-purity APIs, Intermediates, and CDMO services across Human, Veterinary, Cosmetic, and Nutraceutical industries.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <a href="#products" class="px-10 py-4 bg-white text-brand font-bold uppercase text-xs tracking-widest hover:bg-slate-100 transition">
+                        View Portfolio
+                    </a>
+                    <a href="#services" class="px-10 py-4 border border-white/30 text-white font-bold uppercase text-xs tracking-widest hover:bg-white/10 transition">
+                        Our Services
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative Element -->
+        <div class="absolute right-0 bottom-0 w-1/3 h-full opacity-10 pointer-events-none hidden lg:block">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#FFFFFF" d="M44.7,-76.4C58.1,-69.2,69.2,-58.1,76.4,-44.7C83.6,-31.3,86.9,-15.7,85.3,-0.9C83.7,13.8,77.2,27.7,68.4,39.7C59.6,51.7,48.5,61.8,35.7,68.9C22.9,76,8.4,80.1,-6.3,78.9C-21,77.7,-35.9,71.2,-48.4,61.8C-60.9,52.4,-71,40.1,-77.1,26.1C-83.2,12.1,-85.3,-3.6,-81.8,-18.1C-78.3,-32.6,-69.2,-45.9,-57.4,-53.8C-45.6,-61.7,-31.1,-64.2,-17.7,-71.4C-4.3,-78.6,8,-90.5,22.4,-90.5C36.8,-90.5,44.7,-76.4,44.7,-76.4Z" transform="translate(100 100)" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- Application Grid -->
+    <section id="applications" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-20">
+                <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-brand mb-4">Core Markets</h2>
+                <h3 class="text-4xl font-bold tracking-tight section-title">Application Excellence</h3>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" id="appGrid">
+                <!-- Human Pharma -->
+                <div class="card-minimal p-10 cursor-pointer app-filter-btn" data-app="Human Pharma">
+                    <div class="w-12 h-12 text-brand mb-8"><i data-lucide="activity" class="w-full h-full"></i></div>
+                    <h4 class="text-xl font-bold mb-4">Human Pharma</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">GMP compliant APIs and intermediates for critical therapeutic areas.</p>
+                    <ul class="text-[10px] font-bold uppercase tracking-widest text-brand space-y-2">
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> GMP Compliance</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> Regulatory Support</li>
+                    </ul>
+                </div>
+                <!-- Veterinary -->
+                <div class="card-minimal p-10 cursor-pointer app-filter-btn" data-app="Veterinary">
+                    <div class="w-12 h-12 text-brand mb-8"><i data-lucide="dog" class="w-full h-full"></i></div>
+                    <h4 class="text-xl font-bold mb-4">Veterinary</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">High-efficacy solutions for animal health and nutrition.</p>
+                    <ul class="text-[10px] font-bold uppercase tracking-widest text-brand space-y-2">
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> High Stability</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> Global Logistics</li>
+                    </ul>
+                </div>
+                <!-- Cosmetics -->
+                <div class="card-minimal p-10 cursor-pointer app-filter-btn" data-app="Cosmetics">
+                    <div class="w-12 h-12 text-brand mb-8"><i data-lucide="sparkles" class="w-full h-full"></i></div>
+                    <h4 class="text-xl font-bold mb-4">Cosmetics</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">Premium active ingredients for high-end skincare formulations.</p>
+                    <ul class="text-[10px] font-bold uppercase tracking-widest text-brand space-y-2">
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> High Purity</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> Bio-Active</li>
+                    </ul>
+                </div>
+                <!-- Dietary Supplements -->
+                <div class="card-minimal p-10 cursor-pointer app-filter-btn" data-app="Supplements">
+                    <div class="w-12 h-12 text-brand mb-8"><i data-lucide="pill" class="w-full h-full"></i></div>
+                    <h4 class="text-xl font-bold mb-4">Nutraceuticals</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">Science-backed ingredients for health and wellness.</p>
+                    <ul class="text-[10px] font-bold uppercase tracking-widest text-brand space-y-2">
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> Natural Origin</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-3 h-3 mr-2"></i> HPLC Verified</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Excellence -->
+    <section id="services" class="py-32 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-24 items-center">
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-brand mb-4">Professional Services</h2>
+                    <h3 class="text-4xl font-bold tracking-tight mb-8">CDMO & Supply Chain Excellence</h3>
+                    <p class="text-lg text-slate-600 leading-relaxed mb-10">
+                        LentoTech provides end-to-end CDMO services, leveraging advanced <span class="font-bold text-brand">Biosynthetic Pathways</span> to deliver complex molecules from R&D to commercial scale.
+                    </p>
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-6">
+                            <div class="p-3 bg-white rounded-xl shadow-sm text-brand"><i data-lucide="microscope" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Biosynthesis R&D</h4>
+                                <p class="text-sm text-slate-500">Proprietary enzymatic and microbial platforms for sustainable chemical production.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-6">
+                            <div class="p-3 bg-white rounded-xl shadow-sm text-brand"><i data-lucide="factory" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Commercial Scale-up</h4>
+                                <p class="text-sm text-slate-500">Seamless transition from pilot batches to multi-ton commercial manufacturing.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-6">
+                            <div class="p-3 bg-white rounded-xl shadow-sm text-brand"><i data-lucide="globe" class="w-6 h-6"></i></div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Global Supply Chain</h4>
+                                <p class="text-sm text-slate-500">Integrated logistics and regulatory compliance for worldwide distribution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-square bg-brand/5 rounded-[60px] overflow-hidden border border-brand/10">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-6xl font-bold text-brand mb-2">CDMO</div>
+                                <div class="text-xs font-bold uppercase tracking-widest text-slate-400">Integrated Excellence</div>
+                            </div>
+                        </div>
+                        <!-- Abstract SVG Background -->
+                        <svg class="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#004A99" stroke-width="0.5" stroke-dasharray="2 2" />
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="#004A99" stroke-width="0.5" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Catalog -->
+    <section id="products" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-brand mb-4">Product Portfolio</h2>
+                    <h3 class="text-4xl font-bold tracking-tight section-title">High-Purity Catalog</h3>
+                </div>
+                <div class="relative w-full md:w-96">
+                    <input type="text" id="productSearch" placeholder="Search by Name or CAS..." 
+                           class="w-full pl-12 pr-4 py-4 bg-surface border border-slate-200 focus:border-brand outline-none text-sm font-medium transition">
+                    <i data-lucide="search" class="absolute left-4 top-4 text-slate-400 w-5 h-5"></i>
+                </div>
+            </div>
+
+            <div id="productLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="h-64 skeleton"></div>
+                <div class="h-64 skeleton"></div>
+                <div class="h-64 skeleton"></div>
+            </div>
+
+            <div id="productList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+                <!-- Products injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Insights -->
+    <section id="insights" class="py-32 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-brand mb-4">Knowledge Hub</h2>
+                <h3 class="text-4xl font-bold tracking-tight mb-6">Industry Insights</h3>
+                <p class="text-slate-500">Deep dives into therapeutic advancements and market intelligence.</p>
+            </div>
+
+            <div id="newsLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="h-80 skeleton"></div>
+                <div class="h-80 skeleton"></div>
+                <div class="h-80 skeleton"></div>
+            </div>
+
+            <div id="newsFeed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+                <!-- News injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="py-16 border-y border-slate-100 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center items-center gap-12 lg:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="text-center">
+                    <div class="text-xl font-black tracking-tighter">GMP</div>
+                    <div class="text-[8px] font-bold uppercase tracking-widest">Compliance</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xl font-black tracking-tighter">ISO 9001</div>
+                    <div class="text-[8px] font-bold uppercase tracking-widest">Certified</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xl font-black tracking-tighter">FDA</div>
+                    <div class="text-[8px] font-bold uppercase tracking-widest">Registered</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-xl font-black tracking-tighter">BIOSYNTHESIS</div>
+                    <div class="text-[8px] font-bold uppercase tracking-widest">R&D Center</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand pt-24 pb-12 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-12 gap-16 mb-20">
+                <div class="md:col-span-6">
+                    <div class="flex flex-col mb-8">
+                        <span class="text-3xl font-bold tracking-tighter leading-none">Lento<span class="text-blue-300">Tech</span></span>
+                        <span class="text-[10px] uppercase tracking-[0.3em] text-blue-400 font-bold mt-2">兰途科技</span>
+                    </div>
+                    <p class="text-slate-400 text-lg leading-relaxed max-w-md mb-10">
+                        Integrated solutions from biosynthesis to global distribution. Your trusted partner in high-purity chemical excellence.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-slate-400 hover:text-white transition"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-white transition"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+                <div class="md:col-span-3">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-blue-300 mb-8">Contact</h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-3"></i> info@risensunpharma.com</li>
+                        <li class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-3"></i> Global R&D Center</li>
+                    </ul>
+                </div>
+                <div class="md:col-span-3">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-blue-300 mb-8">Quick Links</h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li><a href="#applications" class="hover:text-white transition">Applications</a></li>
+                        <li><a href="#services" class="hover:text-white transition">CDMO Services</a></li>
+                        <li><a href="#products" class="hover:text-white transition">Product Catalog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                <p>© 2026 LentoTech Co., Ltd. All rights reserved.</p>
+                <div class="flex space-x-10">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- News Modal -->
+    <div id="newsModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 modal-overlay" onclick="closeNewsModal()"></div>
+        <div class="bg-white max-w-4xl w-full max-h-[85vh] overflow-y-auto relative z-10 p-12 shadow-2xl custom-scrollbar">
+            <button onclick="closeNewsModal()" class="absolute top-8 right-8 text-slate-400 hover:text-brand transition">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Chart Modal -->
+    <div id="chartModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 modal-overlay" onclick="closeChartModal()"></div>
+        <div class="bg-white max-w-4xl w-full relative z-10 p-12 shadow-2xl">
+            <button onclick="closeChartModal()" class="absolute top-8 right-8 text-slate-400 hover:text-brand transition">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <div class="mb-10">
+                <h3 id="chartTitle" class="text-3xl font-bold text-brand mb-2">Market Intelligence</h3>
+                <p class="text-slate-500 text-sm uppercase tracking-widest font-bold">6-Month Price Trend (USD/kg)</p>
+            </div>
+            <div class="h-[400px]">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DATA_SOURCES = {
+            products: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZSs96nvPnOhzT_Afcul0kRr1euZYv1PWHeX3J1p87u98LBwKpJ-_R2uJGXETxf4cF7w1K06Vo1up-/pub?gid=0&single=true&output=csv',
+            market: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZSs96nvPnOhzT_Afcul0kRr1euZYv1PWHeX3J1p87u98LBwKpJ-_R2uJGXETxf4cF7w1K06Vo1up-/pub?gid=332120458&single=true&output=csv',
+            news: 'news.json'
+        };
+
+        let allProducts = [];
+        let marketData = [];
+        let newsData = [];
+        let priceChart = null;
+        let currentFilter = 'All';
+
+        async function init() {
+            lucide.createIcons();
+            try {
+                const [prodRes, marketRes, newsRes] = await Promise.all([
+                    fetchCSV(DATA_SOURCES.products),
+                    fetchCSV(DATA_SOURCES.market),
+                    fetchJSON(DATA_SOURCES.news)
+                ]);
+                allProducts = prodRes.data;
+                marketData = marketRes.data;
+                newsData = newsRes;
+                
+                renderProducts(allProducts);
+                renderNews(newsData);
+                
+                document.getElementById('productLoading').classList.add('hidden');
+                document.getElementById('productList').classList.remove('hidden');
+                document.getElementById('newsLoading').classList.add('hidden');
+                document.getElementById('newsFeed').classList.remove('hidden');
+
+                initFilters();
+            } catch (error) {
+                console.error('Initialization failed:', error);
+            }
+        }
+
+        function fetchCSV(url) {
+            return new Promise((resolve, reject) => {
+                Papa.parse(url, { download: true, header: true, skipEmptyLines: true, complete: resolve, error: reject });
+            });
+        }
+
+        async function fetchJSON(url) {
+            const response = await fetch(url);
+            return await response.json();
+        }
+
+        function renderProducts(products) {
+            const container = document.getElementById('productList');
+            container.innerHTML = products.map(p => `
+                <div class="card-minimal p-8 flex flex-col h-full">
+                    <div class="flex justify-between items-start mb-6">
+                        <span class="text-[9px] font-bold uppercase tracking-widest px-3 py-1 bg-brand/5 text-brand border border-brand/10">${p.Category}</span>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-slate-400">${p.Status}</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-brand mb-2">${p.Name}</h4>
+                    <div class="text-xs font-mono text-slate-400 mb-6">CAS: ${p.CAS}</div>
+                    <div class="space-y-3 mb-8 flex-grow">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-400">Purity</span>
+                            <span class="font-bold">${p.Purity}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-400">Price</span>
+                            <span class="font-bold text-brand">${p.Current_Price}</span>
+                        </div>
+                    </div>
+                    <button onclick="openChartModal('${p.Name}')" class="w-full py-3 border border-brand text-brand text-[10px] font-bold uppercase tracking-widest hover:bg-brand hover:text-white transition flex items-center justify-center">
+                        <i data-lucide="bar-chart-2" class="w-3 h-3 mr-2"></i> Market Insight
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function renderNews(news) {
+            const container = document.getElementById('newsFeed');
+            container.innerHTML = news.map((n, idx) => `
+                <article class="card-minimal p-8 flex flex-col h-full cursor-pointer" onclick="openNewsModal(${idx})">
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-accent">${n.Category}</span>
+                        <time class="text-[9px] font-bold text-slate-400">${n.Date}</time>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand mb-4 leading-tight">${n.Title}</h4>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-8 line-clamp-3 flex-grow">${n.Summary}</p>
+                    <div class="text-[9px] font-bold uppercase tracking-widest text-brand flex items-center">
+                        Read Full Insight <i data-lucide="arrow-right" class="ml-2 w-3 h-3"></i>
+                    </div>
+                </article>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function initFilters() {
+            document.querySelectorAll('.app-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const app = btn.dataset.app;
+                    
+                    // Toggle active state
+                    if (currentFilter === app) {
+                        currentFilter = 'All';
+                        btn.classList.remove('app-card-active');
+                    } else {
+                        document.querySelectorAll('.app-filter-btn').forEach(b => b.classList.remove('app-card-active'));
+                        currentFilter = app;
+                        btn.classList.add('app-card-active');
+                    }
+
+                    // Filter products
+                    const filtered = currentFilter === 'All' 
+                        ? allProducts 
+                        : allProducts.filter(p => p.Category.includes(currentFilter) || currentFilter.includes(p.Category));
+                    
+                    renderProducts(filtered);
+                    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        }
+
+        // Modals
+        function openNewsModal(index) {
+            const news = newsData[index];
+            const modal = document.getElementById('newsModal');
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div class="mb-10">
+                    <span class="text-xs font-bold uppercase tracking-widest text-accent">${news.Category}</span>
+                    <h2 class="text-4xl font-bold text-brand mt-4 mb-6 tracking-tight">${news.Title}</h2>
+                    <time class="text-xs font-bold text-slate-400 uppercase tracking-widest">${news.Date}</time>
+                </div>
+                <div class="prose prose-slate max-w-none">
+                    <p class="text-xl text-slate-600 leading-relaxed mb-10 font-light italic">${news.Summary}</p>
+                    <div class="h-px bg-slate-100 w-full my-12"></div>
+                    <div class="text-lg text-slate-700 leading-loose space-y-6">
+                        ${news.FullContent}
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeNewsModal() {
+            document.getElementById('newsModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openChartModal(productName) {
+            const item = marketData.find(m => m.Product_Name === productName);
+            if (!item) {
+                alert('Market data for ' + productName + ' is currently being updated.');
+                return;
+            }
+
+            const modal = document.getElementById('chartModal');
+            document.getElementById('chartTitle').innerText = productName;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            const labels = Object.keys(item).filter(k => k !== 'Product_Name');
+            const values = labels.map(l => parseFloat(item[l]));
+
+            if (priceChart) priceChart.destroy();
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price (USD/kg)',
+                        data: values,
+                        borderColor: '#004A99',
+                        backgroundColor: 'rgba(0, 74, 153, 0.05)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#FFFFFF',
+                        pointBorderColor: '#004A99',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#F1F5F9' }, ticks: { font: { size: 10, weight: 'bold' } } },
+                        x: { grid: { display: false }, ticks: { font: { size: 10, weight: 'bold' } } }
+                    }
+                }
+            });
+        }
+
+        function closeChartModal() {
+            document.getElementById('chartModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Search
+        document.getElementById('productSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allProducts.filter(p => 
+                p.Name.toLowerCase().includes(term) || 
+                p.CAS.toLowerCase().includes(term)
+            );
+            renderProducts(filtered);
+        });
+
+        init();
+    </script>
+</body>
+</html>
