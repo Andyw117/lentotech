@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LentoTech Co., Ltd. | Pharmaceutical Quality & Market Intelligence</title>
+    <meta name="description" content="LentoTech is a premier supplier of high-purity Intermediates, APIs, Health Supplements, and Cosmetic Ingredients. GMP/ISO certified.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- PapaParse for CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .card-hover:hover { transform: translateY(-4px); transition: all 0.3s ease; }
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 glass-nav border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-blue-600 p-1.5 rounded-lg">
+                        <i data-lucide="beaker" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight text-slate-800">Lento<span class="text-blue-600">Tech</span></span>
+                </div>
+                
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" id="productSearch" placeholder="Search by Name or CAS No..." 
+                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm">
+                        <i data-lucide="search" class="absolute left-3 top-2.5 text-gray-400 w-4 h-4"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="mailto:info@lentotech.com" class="flex items-center space-x-2 text-sm font-medium text-slate-600 hover:text-blue-600 transition">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">info@lentotech.com</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                        Bridge between Pharmaceutical <span class="text-blue-400">Quality</span> & <span class="text-blue-400">Market Intelligence</span>.
+                    </h1>
+                    <p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                        LentoTech is a premier supplier specializing in high-purity Intermediates, APIs (Human & Veterinary), Health Supplements, and Cosmetic Ingredients.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#products" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition flex items-center">
+                            Browse Products <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                        </a>
+                        <div class="flex items-center space-x-4 text-sm text-slate-400">
+                            <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 mr-1 text-green-400"></i> GMP Certified</span>
+                            <span class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 mr-1 text-green-400"></i> ISO 9001</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block relative">
+                    <div class="absolute -inset-4 bg-blue-500/20 blur-3xl rounded-full"></div>
+                    <div class="relative bg-slate-800/50 border border-slate-700 p-8 rounded-2xl backdrop-blur-sm">
+                        <h3 class="text-xl font-bold mb-4 flex items-center">
+                            <i data-lucide="shield-check" class="mr-2 text-blue-400"></i> Quality Assurance
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-6">
+                            With a focus on supply chain transparency and rigorous quality control, we empower global partners with real-time market data and premium chemical solutions.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <div class="text-2xl font-bold text-blue-400">99.9%</div>
+                                <div class="text-xs text-slate-500 uppercase tracking-wider">Purity Standard</div>
+                            </div>
+                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700">
+                                <div class="text-2xl font-bold text-blue-400">24/7</div>
+                                <div class="text-xs text-slate-500 uppercase tracking-wider">Market Monitoring</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Hub -->
+    <section id="products" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-2">Product Hub</h2>
+                    <p class="text-slate-500">Real-time availability and technical specifications.</p>
+                </div>
+                <div class="flex space-x-2 overflow-x-auto pb-2" id="categoryFilters">
+                    <button class="px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-medium whitespace-nowrap filter-btn active" data-category="All">All Products</button>
+                    <!-- Categories will be injected here -->
+                </div>
+            </div>
+
+            <div id="productLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Loading skeletons -->
+                <div class="h-64 rounded-2xl loading-shimmer"></div>
+                <div class="h-64 rounded-2xl loading-shimmer"></div>
+                <div class="h-64 rounded-2xl loading-shimmer"></div>
+            </div>
+
+            <div id="productList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+                <!-- Products will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Price Intelligence -->
+    <section id="intelligence" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-1">
+                    <div class="inline-block px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-widest mb-4">
+                        Market Data
+                    </div>
+                    <h2 class="text-3xl font-bold mb-6">Price Intelligence</h2>
+                    <p class="text-slate-400 mb-8">
+                        Stay ahead of the market with our monthly price review. We track global trends to ensure you get the most competitive rates for high-purity chemicals.
+                    </p>
+                    <div id="chartControls" class="space-y-3">
+                        <!-- Chart selection buttons will be injected here -->
+                    </div>
+                </div>
+                <div class="lg:col-span-2">
+                    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl shadow-2xl">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 id="activeChartTitle" class="text-lg font-semibold">Market Trend Analysis</h3>
+                            <span class="text-xs text-slate-500">Last updated: Apr 2026</span>
+                        </div>
+                        <div class="relative h-[350px]">
+                            <canvas id="priceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry News Feed -->
+    <section id="news" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Industry Insights</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Latest updates on pharmaceutical regulations, market shifts, and LentoTech company news.</p>
+            </div>
+
+            <div id="newsLoading" class="space-y-4">
+                <div class="h-24 rounded-xl loading-shimmer"></div>
+                <div class="h-24 rounded-xl loading-shimmer"></div>
+            </div>
+
+            <div id="newsFeed" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 hidden">
+                <!-- News items will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="bg-blue-600 p-1.5 rounded-lg">
+                            <i data-lucide="beaker" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight text-slate-800">Lento<span class="text-blue-600">Tech</span></span>
+                    </div>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">
+                        Your trusted partner in high-purity chemical solutions and pharmaceutical market intelligence.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-blue-600 transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-blue-600 transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Quick Links</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li><a href="#products" class="hover:text-blue-600 transition">Product Hub</a></li>
+                        <li><a href="#intelligence" class="hover:text-blue-600 transition">Market Intelligence</a></li>
+                        <li><a href="#news" class="hover:text-blue-600 transition">Industry News</a></li>
+                        <li><a href="mailto:info@lentotech.com" class="hover:text-blue-600 transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Compliance</h4>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded border border-gray-200">GMP CERTIFIED</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded border border-gray-200">ISO 9001:2015</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded border border-gray-200">HPLC TESTED</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded border border-gray-200">REACH COMPLIANT</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Contact</h4>
+                    <ul class="space-y-4 text-sm text-slate-500">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-3 text-blue-600 mt-0.5"></i>
+                            <span>LentoTech Co., Ltd.<br>Global Chemical District</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="mail" class="w-4 h-4 mr-3 text-blue-600"></i>
+                            <a href="mailto:info@lentotech.com" class="hover:text-blue-600">info@lentotech.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-slate-400">© 2026 LentoTech Co., Ltd. All rights reserved.</p>
+                <div class="flex space-x-6 text-xs text-slate-400">
+                    <a href="#" class="hover:text-blue-600">Privacy Policy</a>
+                    <a href="#" class="hover:text-blue-600">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration
+        const CSV_URLS = {
+            products: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZSs96nvPnOhzT_Afcul0kRr1euZYv1PWHeX3J1p87u98LBwKpJ-_R2uJGXETxf4cF7w1K06Vo1up-/pub?gid=0&single=true&output=csv',
+            market: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZSs96nvPnOhzT_Afcul0kRr1euZYv1PWHeX3J1p87u98LBwKpJ-_R2uJGXETxf4cF7w1K06Vo1up-/pub?gid=332120458&single=true&output=csv',
+            news: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSZSs96nvPnOhzT_Afcul0kRr1euZYv1PWHeX3J1p87u98LBwKpJ-_R2uJGXETxf4cF7w1K06Vo1up-/pub?gid=1432977561&single=true&output=csv'
+        };
+
+        let allProducts = [];
+        let marketData = [];
+        let priceChart = null;
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Data Fetching
+        async function init() {
+            try {
+                const [prodRes, marketRes, newsRes] = await Promise.all([
+                    fetchCSV(CSV_URLS.products),
+                    fetchCSV(CSV_URLS.market),
+                    fetchCSV(CSV_URLS.news)
+                ]);
+
+                allProducts = prodRes.data;
+                marketData = marketRes.data;
+                
+                renderProducts(allProducts);
+                renderCategories(allProducts);
+                renderNews(newsRes.data);
+                initChart(marketData);
+                
+                document.getElementById('productLoading').classList.add('hidden');
+                document.getElementById('productList').classList.remove('hidden');
+                document.getElementById('newsLoading').classList.add('hidden');
+                document.getElementById('newsFeed').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Initialization failed:', error);
+            }
+        }
+
+        function fetchCSV(url) {
+            return new Promise((resolve, reject) => {
+                Papa.parse(url, {
+                    download: true,
+                    header: true,
+                    skipEmptyLines: true,
+                    complete: resolve,
+                    error: reject
+                });
+            });
+        }
+
+        // Product Rendering
+        function renderProducts(products) {
+            const container = document.getElementById('productList');
+            container.innerHTML = products.map(p => `
+                <div class="bg-white border border-gray-200 rounded-2xl p-6 card-hover shadow-sm flex flex-col h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold rounded uppercase tracking-wider border border-blue-100">${p.Category}</span>
+                        <span class="flex items-center text-[10px] font-medium ${p.Status === 'In Stock' ? 'text-green-600' : 'text-orange-600'}">
+                            <span class="w-1.5 h-1.5 rounded-full ${p.Status === 'In Stock' ? 'bg-green-500' : 'bg-orange-500'} mr-1.5"></span>
+                            ${p.Status}
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-1">${p.Name}</h3>
+                    <p class="text-xs text-slate-400 font-mono mb-4">CAS: ${p.CAS}</p>
+                    <div class="space-y-2 mb-6 flex-grow">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-500">Purity</span>
+                            <span class="font-semibold text-slate-700">${p.Purity}</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-500">Price</span>
+                            <span class="font-bold text-blue-600">${p.Current_Price}</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4 line-clamp-2 italic">"${p.Description}"</p>
+                    </div>
+                    <button onclick="viewTrend('${p.Name}')" class="w-full py-2.5 bg-slate-50 hover:bg-blue-50 text-slate-600 hover:text-blue-600 text-sm font-semibold rounded-xl transition border border-slate-200 hover:border-blue-200 flex items-center justify-center">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i> View Market Trend
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function renderCategories(products) {
+            const categories = ['All', ...new Set(products.map(p => p.Category))];
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = categories.map(cat => `
+                <button class="px-4 py-2 rounded-full ${cat === 'All' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'} text-sm font-medium whitespace-nowrap filter-btn transition" 
+                        data-category="${cat}">
+                    ${cat}
+                </button>
+            `).join('');
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('bg-blue-600', 'text-white');
+                        b.classList.add('bg-gray-100', 'text-gray-600');
+                    });
+                    e.target.classList.remove('bg-gray-100', 'text-gray-600');
+                    e.target.classList.add('bg-blue-600', 'text-white');
+                    
+                    const cat = e.target.dataset.category;
+                    const filtered = cat === 'All' ? allProducts : allProducts.filter(p => p.Category === cat);
+                    renderProducts(filtered);
+                });
+            });
+        }
+
+        // News Rendering
+        function renderNews(news) {
+            const container = document.getElementById('newsFeed');
+            container.innerHTML = news.map(n => `
+                <article class="group cursor-pointer">
+                    <div class="mb-4 overflow-hidden rounded-2xl bg-gray-100 aspect-video relative">
+                        <div class="absolute inset-0 flex items-center justify-center text-gray-300">
+                            <i data-lucide="newspaper" class="w-12 h-12"></i>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-white/90 backdrop-blur text-[10px] font-bold rounded-full text-blue-600 shadow-sm">${n.Category}</span>
+                        </div>
+                    </div>
+                    <time class="text-xs text-slate-400 font-medium">${n.Date}</time>
+                    <h3 class="text-lg font-bold text-slate-900 mt-2 group-hover:text-blue-600 transition line-clamp-2">${n.Title}</h3>
+                    <p class="text-sm text-slate-500 mt-3 line-clamp-3 leading-relaxed">${n.Summary || n['Summary (SEO Content)']}</p>
+                </article>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Chart Intelligence
+        function initChart(data) {
+            if (!data || data.length === 0) return;
+            
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            const labels = Object.keys(data[0]).filter(k => k !== 'Product_Name');
+            
+            const controls = document.getElementById('chartControls');
+            controls.innerHTML = data.map((item, idx) => `
+                <button onclick="updateChart(${idx})" class="w-full text-left px-4 py-3 rounded-xl border ${idx === 0 ? 'bg-blue-600 border-blue-500 text-white' : 'bg-slate-800 border-slate-700 text-slate-400'} transition chart-selector" data-index="${idx}">
+                    <div class="text-xs opacity-60 uppercase font-bold tracking-tighter">Product</div>
+                    <div class="font-bold">${item.Product_Name}</div>
+                </button>
+            `).join('');
+
+            updateChart(0);
+        }
+
+        function updateChart(index) {
+            const item = marketData[index];
+            const labels = Object.keys(item).filter(k => k !== 'Product_Name');
+            const values = labels.map(l => parseFloat(item[l]));
+
+            document.getElementById('activeChartTitle').innerText = `${item.Product_Name} Price Trend (USD/kg)`;
+            
+            document.querySelectorAll('.chart-selector').forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.remove('bg-slate-800', 'border-slate-700', 'text-slate-400');
+                    btn.classList.add('bg-blue-600', 'border-blue-500', 'text-white');
+                } else {
+                    btn.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-400');
+                    btn.classList.remove('bg-blue-600', 'border-blue-500', 'text-white');
+                }
+            });
+
+            if (priceChart) priceChart.destroy();
+
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price (USD)',
+                        data: values,
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#60a5fa',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#94a3b8', font: { size: 10 } }
+                        },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function viewTrend(productName) {
+            const index = marketData.findIndex(m => m.Product_Name === productName);
+            if (index !== -1) {
+                document.getElementById('intelligence').scrollIntoView({ behavior: 'smooth' });
+                updateChart(index);
+            } else {
+                alert('Market trend data for ' + productName + ' is currently being updated.');
+            }
+        }
+
+        // Search Logic
+        document.getElementById('productSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = allProducts.filter(p => 
+                p.Name.toLowerCase().includes(term) || 
+                p.CAS.toLowerCase().includes(term) ||
+                p.Category.toLowerCase().includes(term)
+            );
+            renderProducts(filtered);
+        });
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
