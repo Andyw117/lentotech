@@ -1,26 +1,26 @@
 [
   {
-    "Date": "2026-04-05",
-    "Title": "Global API Supply Chain Resilience Report 2026",
-    "Category": "Market Analysis",
-    "Summary": "LentoTech's latest report highlights the shifting landscape of API manufacturing in Southeast Asia and the impact of new regulatory frameworks on global logistics and pricing stability."
+    "date": "2026-04-07",
+    "tag": "Respiratory",
+    "image": "images/respiratory-copd.webp",
+    "title": "Optimizing COPD Combination Therapy: Risun Pharma’s Integrated API Solutions",
+    "summary": "Chronic Obstructive Pulmonary Disease (COPD) remains a global health challenge requiring complex 'LAMA+LABA+ICS' triple therapies. Risun Pharma is empowering formulation partners with a high-purity portfolio including Fluticasone Furoate and Revefenacin. By overcoming micronization technical barriers, we provide a one-stop API support system that ensures aerodynamic stability and superior clinical efficacy for inhaler development.",
+    "link": "#"
   },
   {
-    "Date": "2026-03-28",
-    "Title": "New GMP Standards for High-Purity Intermediates",
-    "Category": "Compliance",
-    "Summary": "The European Medicines Agency (EMA) has updated its GMP guidelines for chemical intermediates. LentoTech confirms full compliance across all manufacturing facilities as of Q1 2026."
+    "date": "2026-04-05",
+    "tag": "CNS-System",
+    "image": "images/cns-innovation.webp",
+    "title": "Closing the Supply Gap: Advanced CNS APIs for Specialized Psychiatric Disorders",
+    "summary": "The demand for high-end Central Nervous System (CNS) drugs is surging, yet supply gaps for complex molecules remain. Risun Pharma has expanded its portfolio with registered APIs such as Mirogabalin Besylate, Paliperidone, and Safinamide Mesylate. Our cGMP-certified facilities focus on stringent crystal form control and impurity profiling, offering reliable solutions for DPNP and schizophrenia treatments.",
+    "link": "#"
   },
   {
-    "Date": "2026-03-15",
-    "Title": "NMN Purity Breakthrough: Achieving 99.9% via HPLC",
-    "Category": "Innovation",
-    "Summary": "Our R&D team has successfully optimized the purification process for Nicotinamide Mononucleotide (NMN), ensuring consistent 99.9% purity levels for premium health supplement formulations."
-  },
-  {
-    "Date": "2026-03-02",
-    "Title": "Strategic Partnership with Global Logistics Leaders",
-    "Category": "Logistics",
-    "Summary": "LentoTech expands its cold-chain logistics network to include direct shipping routes to North America and Europe, reducing lead times for sensitive veterinary APIs by 30%."
+    "date": "2026-04-01",
+    "tag": "Cardio-Renal",
+    "image": "images/finerenone-breakthrough.webp",
+    "title": "Precision Targeting: Finerenone API Advancing Heart-Kidney Comorbidity Care",
+    "summary": "Finerenone, a highly selective non-steroidal mineralocorticoid receptor antagonist (MRA), is revolutionizing the treatment of chronic kidney disease associated with type 2 diabetes. Risun Pharma’s progress in Finerenone API registration marks a significant milestone in precision medicine. We provide global partners with robust DMF documentation and sustainable supply chains to accelerate the entry into the era of targeted cardio-renal therapy.",
+    "link": "#"
   }
 ]
